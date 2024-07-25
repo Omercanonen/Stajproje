@@ -8,11 +8,11 @@ using Stajproje.Models;
 
 #nullable disable
 
-namespace Stajproje.Migrations
+namespace Stajproje.Migrations.UserDb
 {
-    [DbContext(typeof(AccountContext))]
-    [Migration("20240719102610_AccountSeedData")]
-    partial class AccountSeedData
+    [DbContext(typeof(UserDbContext))]
+    [Migration("20240725073219_AddUsersTable")]
+    partial class AddUsersTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,25 +24,36 @@ namespace Stajproje.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Stajproje.Models.Account", b =>
+            modelBuilder.Entity("Stajproje.Models.User", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
-                    b.Property<string>("Password")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("id");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Accounts");
+                    b.Property<int>("RegStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }
