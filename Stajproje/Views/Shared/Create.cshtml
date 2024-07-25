@@ -2,6 +2,7 @@
     ViewData["Title"] = "Create User";
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
+@model Stajproje.Models.User
 
  <!DOCTYPE html>
 <html>
@@ -180,24 +181,24 @@
                <form role="form">
                  <div class="card-body">
                     <div class="form-group">
-                    <label for="UserId" class="control-label ">Kullanıcı ID</label>
-                    <input for="UserId" type="number" class="form-control" id="exampleInputUserId" placeholder="Kullanıcı ID">
+                    <label asp-for="UserId" class="control-label ">Kullanıcı ID</label>
+                    <input asp-for="UserId" type="number" class="form-control" id="exampleInputUserId" placeholder="Kullanıcı ID">
                   </div>
                   <div class="form-group">
-                    <label for="Name" class="control-label">İsim</label>
-                    <input for="Name" type="text" class="form-control" id="exampleInputName" placeholder="İsim">
+                    <label asp-for="Name" class="control-label">İsim</label>
+                    <input asp-for="Name" type="text" class="form-control" id="exampleInputName" placeholder="İsim">
                   </div>
                   <div class="form-group">
-                    <label for="Surname" class="control-label">Soyisim</label>
-                    <input for="Surname" type="text" class="form-control" id="exampleInputSurname" placeholder="Soyisim">
+                    <label asp-for="Surname" class="control-label">Soyisim</label>
+                    <input asp-for="Surname" type="text" class="form-control" id="exampleInputSurname" placeholder="Soyisim">
                   </div>
                   <div class="form-group">
-                    <label for="Email" class="control-label">Email</label>
-                    <input for="Email" type="email" class="form-control" id="exampleInputEmail" placeholder="Email">
+                    <label asp-for="Email" class="control-label">Email</label>
+                    <input asp-for="Email" type="email" class="form-control" id="exampleInputEmail" placeholder="Email">
                   </div>
                   <div class="form-group">
-                    <label for="PhoneNumber" class="control-label">Telefon Numarası</label>
-                    <input for="PhoneNumber" type="number" class="form-control" id="exampleInputPhoneNumber" placeholder="Telefon Numarası">
+                    <label asp-for="PhoneNumber" class="control-label">Telefon Numarası</label>
+                    <input asp-for="PhoneNumber" type="number" class="form-control" id="exampleInputPhoneNumber" placeholder="Telefon Numarası">
                   </div>
                   <div class="form-group">
                     <div class="custom-control custom-switch">
