@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Stajproje.Models;
 
@@ -15,9 +16,15 @@ namespace Stajproje.Controllers
 
         public IActionResult Index()
         {
-            var users = context.Users.ToList();
-            return View("/Home/UserPage",users);
+            return View();
         }
+        public IActionResult UserPage()
+        {
+            var list = context.Users.ToList();
+            return View(list);
+        }
+
+        
 
         public IActionResult Create()
         {
@@ -30,11 +37,13 @@ namespace Stajproje.Controllers
         {
             if(ModelState.IsValid)
             {
+                
                 context.Users.Add(user);
                 await context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
             return View(user);
         }
+       
     }
 }

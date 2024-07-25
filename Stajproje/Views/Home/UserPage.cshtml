@@ -2,7 +2,7 @@
     ViewData["Title"] = "User Page";
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
-@model Stajproje.Models.User
+@model IEnumerable<Stajproje.Models.User>
 <!-- ANASAYFA -->
 <!DOCTYPE html>
 <html>
@@ -148,7 +148,7 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            <section class="content-header">
+             <section class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
@@ -162,10 +162,66 @@
                         </div>
                     </div>
                 </div><!-- /.container-fluid -->
-            </section>
+            </section> 
+            @* <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">İsim</th>
+                        <th scope="col">Soyisim</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Telefon Numarası</th>
+                        <th scope="col">Durum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                     @foreach (var users in Model)
+                   { <th scope="row">@users.UserId</th>
+                     <td>@users.Name</td>
+                     <td>@users.Surname</td>
+                     <td>@users.Email</td>
+                     <td>@users.PhoneNumber</td>
+                     <td>@users.RegStatus</td> 
+
+                   } 
+
+                </tbody>
+            </table> *@
+            @if (Model != null && Model.Any())
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">İsim</th>
+                            <th scope="col">Soyisim</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Telefon Numarası</th>
+                            <th scope="col">Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var users in Model)
+                        {
+                            <tr>
+                                <th scope="row">@users.UserId</th>
+                                <td>@users.Name</td>
+                                <td>@users.Surname</td>
+                                <td>@users.Email</td>
+                                <td>@users.PhoneNumber</td>
+                                <td>@users.RegStatus</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+             }
+            else
+            {
+                <p>Kullanıcı bulunamadı</p>
+            } 
 
             <!-- Main content -->
-            @* <section class="content">
+            @*  <section class="content">
             <div class="card">
             <div class="card-header">
             <h3 class="card-title">jsGrid</h3>
@@ -177,13 +233,12 @@
             <!-- /.card-body -->
             </div>
             <!-- /.card -->
-            </section> *@
+            </section>  *@
             <section class="content">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h3 class="card-title">jsGrid</h3>
                         <a asp-controller="Users" asp-action="Create" class="btn btn-primary">Kullanıcı Ekle</a>
-
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
