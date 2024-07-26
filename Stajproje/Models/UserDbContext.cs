@@ -7,6 +7,6 @@ namespace Stajproje.Models
         public UserDbContext(DbContextOptions options) : base(options)
         {
         }
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> Users { get; set; }        
     }
 }

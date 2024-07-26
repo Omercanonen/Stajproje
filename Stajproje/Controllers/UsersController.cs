@@ -14,30 +14,53 @@ namespace Stajproje.Controllers
             this.context = context;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<ActionResult> UserPage()
         {
-            return View();
-        }
-        public IActionResult UserPage()
-        {
-            var list = context.Users.ToList();
+            var list = await context.Users.ToListAsync();
             return View(list);
         }
-
-        
-
-        public IActionResult Create()
+        [HttpGet]
+        public async Task<IActionResult> Edit(int Id)
         {
-            return View(); 
+            var User = await context.Users.FindAsync(Id);
+
+            return View(User);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(User viewModel)
+        {
+           var User = await context.Users.FindAsync(viewModel.UserId);
+
+            if (User != null) 
+            {
+                User.Name = viewModel.Name;
+                User.Surname = viewModel.Surname;
+                User.Email = viewModel.Email;
+                User.PhoneNumber = viewModel.PhoneNumber;
+                User.RegStatus = viewModel.RegStatus;
+
+                await context.SaveChangesAsync();
+            }
+            return RedirectToAction("UserPage","UserController");
+        }
+
+        public async Task<IActionResult> Delete(int Id)
+        {
+            var user = await context.Users.FindAsync(Id);
+            context.Remove(user);
+            await context.SaveChangesAsync();
+            return RedirectToAction("UserPage");
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Surname,Email,PhoneNumber,RegStatus")] User user)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                
+
                 context.Users.Add(user);
                 await context.SaveChangesAsync();
                 return RedirectToAction("Create");

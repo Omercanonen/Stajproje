@@ -1,15 +1,15 @@
 ﻿@{
-    ViewData["Title"] = "User Page";
+    ViewData["Title"] = "Create User";
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
-@model IEnumerable<Stajproje.Models.User>
-<!-- ANASAYFA -->
+@model Stajproje.Models.User
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 3 | jsGrid</title>
+    <title>AdminLTE 3 | General Form Elements</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -17,9 +17,6 @@
     <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- jsGrid -->
-    <link rel="stylesheet" href="../../plugins/jsgrid/jsgrid.min.css">
-    <link rel="stylesheet" href="../../plugins/jsgrid/jsgrid-theme.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
@@ -60,7 +57,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-comments"></i>
-                        @*  <span class="badge badge-danger navbar-badge">3</span> *@
+                        <span class="badge badge-danger navbar-badge">3</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <a href="#" class="dropdown-item">
@@ -118,7 +115,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-bell"></i>
-
+                        <span class="badge badge-warning navbar-badge">15</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <span class="dropdown-item dropdown-header">15 Notifications</span>
@@ -141,160 +138,144 @@
                         <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                     </div>
                 </li>
-
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li>
             </ul>
         </nav>
-        <!-- /.navbar -->
+
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-             <section class="content-header">
+            <section class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>jsGrid</h1>
+                            <h1>General Form</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">jsGrid</li>
+                                <li class="breadcrumb-item active">General Form</li>
                             </ol>
                         </div>
                     </div>
                 </div><!-- /.container-fluid -->
-            </section> 
-            @* <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">İsim</th>
-                        <th scope="col">Soyisim</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Telefon Numarası</th>
-                        <th scope="col">Durum</th>
-                    </tr>
-                </thead>
-                <tbody>
-                     @foreach (var users in Model)
-                   { <th scope="row">@users.UserId</th>
-                     <td>@users.Name</td>
-                     <td>@users.Surname</td>
-                     <td>@users.Email</td>
-                     <td>@users.PhoneNumber</td>
-                     <td>@users.RegStatus</td> 
-
-                   } 
-
-                </tbody>
-            </table> *@
-            @if (Model != null && Model.Any())
-            {
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">İsim</th>
-                            <th scope="col">Soyisim</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Telefon Numarası</th>
-                            <th scope="col">Durum</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var users in Model)
-                        {
-                            <tr>
-                                <th scope="row">@users.UserId</th>
-                                <td>@users.Name</td>
-                                <td>@users.Surname</td>
-                                <td>@users.Email</td>
-                                <td>@users.PhoneNumber</td>
-                                <td>@users.RegStatus</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-             }
-            else
-            {
-                <p>Kullanıcı bulunamadı</p>
-            } 
-
-            <!-- Main content -->
-            @*  <section class="content">
-            <div class="card">
-            <div class="card-header">
-            <h3 class="card-title">jsGrid</h3>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-            <div id="jsGrid1"></div>
-            </div>
-            <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-            </section>  *@
-            <section class="content">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h3 class="card-title">jsGrid</h3>
-                        <a asp-controller="Users" asp-action="Create" class="btn btn-primary">Kullanıcı Ekle</a>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <div id="jsGrid1"></div>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
             </section>
 
-            <!-- /.content -->
-        </div>
-        <!-- /.content-wrapper -->
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
-                <b>Version</b> 3.0.4
+           
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- left column -->
+                        <div class="col-md-6">
+                            <!-- general form elements -->
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Quick Example</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                @if (Model is null)
+                                {
+                                    <p>Kullanıcı bulunamadı</p>
+                                }
+                                else
+                                {
+                                <!-- form start -->
+                                <form method="post" asp-action="Create" asp-autocomplete="off" role="form">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label asp-for="UserId" class="control-label ">Kullanıcı ID</label>
+                                            <input asp-for="UserId" type="number" class="form-control" id="exampleInputUserId" placeholder="Kullanıcı ID" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Name" class="control-label">İsim</label>
+                                            <input asp-for="Name" type="text" class="form-control" id="exampleInputName" placeholder="İsim">
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Surname" class="control-label">Soyisim</label>
+                                            <input asp-for="Surname" type="text" class="form-control" id="exampleInputSurname" placeholder="Soyisim">
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Email" class="control-label">Email</label>
+                                            <input asp-for="Email" type="email" class="form-control" id="exampleInputEmail" placeholder="Email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="PhoneNumber" class="control-label">Telefon Numarası</label>
+                                            <input asp-for="PhoneNumber" type="number" class="form-control" id="exampleInputPhoneNumber" placeholder="Telefon Numarası">
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="RegStatus">Durum</label>
+                                            <div class="custom-control custom-radio">
+                                                <input asp-for="RegStatus" type="radio" class="custom-control-input" id="RegStatus1" name="RegStatus" value="1" />
+                                                <label class="custom-control-label" for="RegStatus1">Aktif</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input asp-for="RegStatus" type="radio" class="custom-control-input" id="RegStatus0" name="RegStatus" value="0" />
+                                                <label class="custom-control-label" for="RegStatus0">Pasif</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleInputFile">Fotoğraf Yükle</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="exampleInputFile">
+                                                    <label class="custom-file-label" for="exampleInputFile">Dosya Seç</label>
+                                                </div>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text" id="">Yükle</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- /.card-body -->
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                                    </div>
+                                </form>
+                                }
+
+                            </div>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+
+                </div>
+        
             </div>
-            <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
-            reserved.
-        </footer>
-
-
+            
+        </section>
+        
+    </div>
+    <footer class="main-footer">
+        <div class="float-right d-none d-sm-block">
+            <b>Version</b> 3.0.4
+        </div>
+        <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
+        reserved.
+    </footer>
     </div>
     <!-- ./wrapper -->
     <!-- jQuery -->
     <script src="../../plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- jsGrid -->
-    <script src="../../plugins/jsgrid/demos/db.js"></script>
-    <script src="../../plugins/jsgrid/jsgrid.min.js"></script>
+    <!-- bs-custom-file-input -->
+    <script src="../../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../../dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../../dist/js/demo.js"></script>
-    <!-- page script -->
-    <script>
-        $(function () {
-            $("#jsGrid1").jsGrid({
-                height: "100%",
-                width: "100%",
-
-                sorting: true,
-                paging: true,
-
-                data: db.StajProje, // Data kısmını değiştir!
-
-                fields: [
-                    { name: "Cari ID", type: "number", width: 150 },
-                    { name: "İsim", type: "text", width: 50 },
-                    { name: "Soyisim", type: "text", width: 50 },
-                    { name: "Telefon", type: "number", width: 200 },
-                    { name: "Email", type: "text", },
-                    { name: "Durum", type: "checkbox", title: "Is Active" }
-                ]
-            });
+    <script type="text/javascript">
+        $(document).ready(function () {
+            bsCustomFileInput.init();
         });
     </script>
 </body>
