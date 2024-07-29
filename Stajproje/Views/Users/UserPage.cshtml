@@ -163,79 +163,10 @@
                     </div>
                 </div><!-- /.container-fluid -->
             </section>
-            @* <table class="table">
-            <thead>
-            <tr>
-            <th scope="col">Id</th>
-            <th scope="col">İsim</th>
-            <th scope="col">Soyisim</th>
-            <th scope="col">Email</th>
-            <th scope="col">Telefon Numarası</th>
-            <th scope="col">Durum</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var users in Model)
-            { <th scope="row">@users.UserId</th>
-            <td>@users.Name</td>
-            <td>@users.Surname</td>
-            <td>@users.Email</td>
-            <td>@users.PhoneNumber</td>
-            <td>@users.RegStatus</td>
 
-            }
+            
 
-            </tbody>
-            </table> *@
-            @if (Model != null && Model.Any())
-            {
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">İsim</th>
-                            <th scope="col">Soyisim</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Telefon Numarası</th>
-                            <th scope="col">Durum</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var user in Model)
-                        {
-                            <tr>
-                                <th scope="row">@user.UserId</th>
-                                <td>@user.Name</td>
-                                <td>@user.Surname</td>
-                                <td>@user.Email</td>
-                                <td>@user.PhoneNumber</td>
-                                <td>@user.RegStatus</td>
-                                <td><a class="btn btn-danger" asp-action="Delete" asp-route-id="@user.UserId">Sil</a></td>
-                                <td><a class="btn btn-secondary" asp-action="Edit" asp-route-id="@user.UserId">Güncelle</a></td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            }
-            else
-            {
-                <p>Kullanıcı bulunamadı</p>
-            }
-
-            <!-- Main content -->
-            @*  <section class="content">
-            <div class="card">
-            <div class="card-header">
-            <h3 class="card-title">jsGrid</h3>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-            <div id="jsGrid1"></div>
-            </div>
-            <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-            </section>  *@
+    
             <section class="content">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
@@ -246,6 +177,46 @@
                     <div class="card-body">
                         <div id="jsGrid1"></div>
                     </div>
+                    @if (Model != null && Model.Any())
+                    {
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">İsim</th>
+                                    <th scope="col">Soyisim</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Telefon Numarası</th>
+                                    <th scope="col">Durum</th>
+                                    <th scope="col">Unvan</th>
+                                    <th scope="col">Vergi Dairesi</th>
+                                    <th scope="col">Vergi Numarası</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in Model)
+                                {
+                                    <tr>
+                                        <th scope="row">@user.UserId</th>
+                                        <td>@user.Name</td>
+                                        <td>@user.Surname</td>
+                                        <td>@user.Email</td>
+                                        <td>@user.PhoneNumber</td>
+                                        <td>@user.RegStatus</td>
+                                        <td>@user.Title</td>
+                                        <td>@user.TaxAdmin</td>
+                                        <td>@user.TaxNo</td>
+                                        <td><a class="btn btn-danger" asp-action="Delete" asp-route-id="@user.UserId">Sil</a></td>
+                                        <td><a class="btn btn-secondary" asp-action="Edit" asp-route-id="@user.UserId">Güncelle</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p>Kullanıcı bulunamadı</p>
+                    }
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
@@ -295,6 +266,9 @@
                     { name: "Telefon", type: "number", width: 200 },
                     { name: "Email", type: "text", },
                     { name: "Durum", type: "checkbox", title: "Is Active" }
+                    { name: "Unvan", type: "text"}
+                    { name: "Vergi Dairesi", type: "text" }
+                    { name: "Vergi Numarası", type: "number" } 
                 ]
             });
         });

@@ -39,10 +39,14 @@ namespace Stajproje.Controllers
                 User.Email = viewModel.Email;
                 User.PhoneNumber = viewModel.PhoneNumber;
                 User.RegStatus = viewModel.RegStatus;
+                User.Title = viewModel.Title;
+                User.TaxAdmin = viewModel.TaxAdmin;
+                User.TaxNo = viewModel.TaxNo;
 
+                context.Users.Update(User);
                 await context.SaveChangesAsync();
-            }
-            return RedirectToAction("UserPage","UserController");
+            } 
+            return View(viewModel);
         }
 
         public async Task<IActionResult> Delete(int Id)
@@ -56,7 +60,7 @@ namespace Stajproje.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Surname,Email,PhoneNumber,RegStatus")] User user)
+        public async Task<IActionResult> Create([Bind("Name,Surname,Email,PhoneNumber,RegStatus,Title,TaxAdmin,TaxNo")] User user)
         {
             if (ModelState.IsValid)
             {

@@ -8,5 +8,11 @@
         public string Surname{ get; set; }
         public string PhoneNumber { get; set; }
         public int RegStatus { get; set; }
+
+        public string Title { get; set; }
+        public string TaxAdmin { get; set; }
+        public string TaxNo { get; set; }
+
+
     }
 }
