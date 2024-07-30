@@ -1,8 +1,8 @@
 ﻿@{
-    ViewData["Title"] = "User Page";
+    ViewData["Title"] = "Service Page";
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
-@model IEnumerable<Stajproje.Models.User>
+@model IEnumerable<Stajproje.Models.Service>
 <!-- ANASAYFA -->
 <!DOCTYPE html>
 <html>
@@ -25,7 +25,8 @@
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body class="hold-transition sidebar-mini">
+<body>
+
     <div class="wrapper">
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -164,9 +165,9 @@
                 </div><!-- /.container-fluid -->
             </section>
 
-            
 
-    
+
+
             <section class="content">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
@@ -177,7 +178,7 @@
                     <div class="card-body">
                         <div id="jsGrid1"></div>
                     </div>
-                    @if (Model != null && Model.Any())
+                   @*  @if (Model != null && Model.Any())
                     {
                         <table class="table">
                             <thead>
@@ -216,7 +217,7 @@
                     else
                     {
                         <p>Kullanıcı bulunamadı</p>
-                    }
+                    } *@
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
@@ -235,43 +236,7 @@
 
 
     </div>
-    <!-- ./wrapper -->
-    <!-- jQuery -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- jsGrid -->
-    <script src="../../plugins/jsgrid/demos/db.js"></script>
-    <script src="../../plugins/jsgrid/jsgrid.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="../../dist/js/adminlte.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="../../dist/js/demo.js"></script>
-    <!-- page script -->
-    <script>
-        $(function () {
-            $("#jsGrid1").jsGrid({
-                height: "100%",
-                width: "100%",
 
-                sorting: true,
-                paging: true,
 
-                data: db.StajProje, // Data kısmını değiştir!
 
-                fields: [
-                    { name: "Cari ID", type: "number", width: 150 },
-                    { name: "İsim", type: "text", width: 50 },
-                    { name: "Soyisim", type: "text", width: 50 },
-                    { name: "Telefon", type: "number", width: 200 },
-                    { name: "Email", type: "text", },
-                    { name: "Durum", type: "checkbox", title: "Is Active" }
-                    { name: "Unvan", type: "text"}
-                    { name: "Vergi Dairesi", type: "text" }
-                    { name: "Vergi Numarası", type: "number" } 
-                ]
-            });
-        });
-    </script>
 </body>
-</html>
