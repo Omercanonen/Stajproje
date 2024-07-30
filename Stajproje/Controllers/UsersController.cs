@@ -57,6 +57,11 @@ namespace Stajproje.Controllers
             return RedirectToAction("UserPage");
 
         }
+       
+        public IActionResult Create()
+        {
+            return View();
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -71,6 +76,7 @@ namespace Stajproje.Controllers
             }
             return View(user);
         }
-       
+
+
     }
 }

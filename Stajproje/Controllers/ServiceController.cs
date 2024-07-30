@@ -4,7 +4,8 @@ namespace Stajproje.Controllers
 {
     public class ServiceController : Controller
     {
-        public IActionResult Index()
+        
+        public IActionResult Service()
         {
             return View();
         }
