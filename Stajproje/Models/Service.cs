@@ -1,9 +1,13 @@
-﻿namespace Stajproje.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Stajproje.Models
 {
     public class Service
     {
         public int Id { get; set; }
-        public int CustId { get; set; }
+        public int UserId { get; set; }
+        //[ForeignKey("UserId")]
+        //public virtual User User { get; set; }
         public string Brand { get; set; }
         public string Model { get; set; }
         public int SeriNo {  get; set; }
