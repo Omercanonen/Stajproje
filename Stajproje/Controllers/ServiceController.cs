@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Stajproje.Models;
 
@@ -15,7 +16,13 @@ namespace Stajproje.Controllers
         [HttpGet]
         public async Task<IActionResult> Service()
         {
-            var list = await context.Services.ToListAsync();
+            //var list = await context.Services.ToListAsync();
+            ////var list = await context.Services.Include(m => m.UserId).OrderBy(m => m.Name).ToListAsync();
+            //return View(list);
+            var list = await context.Services
+                            .Include(s => s.User) // User'ı dahil et
+                            .OrderBy(s => s.User.Name) // Kullanıcı adlarına göre sırala
+                            .ToListAsync();
             return View(list);
         }
         [HttpGet]
@@ -44,7 +51,6 @@ namespace Stajproje.Controllers
                 Service.Description = viewModel.Description;
                 Service.DeliveryDate = viewModel.DeliveryDate;
 
-
                 context.Services.Update(Service);
                 await context.SaveChangesAsync();
             }
@@ -58,20 +64,50 @@ namespace Stajproje.Controllers
             return RedirectToAction("Service");
 
         }
-        public IActionResult CreateService()
+        public async Task<IActionResult> CreateService()
         {
+            var users = await context.Users.ToListAsync(); // Tüm kullanıcıları al
+            ViewBag.Users = new SelectList(users, "UserId", "UserId"); // Kullanıcı listesini ViewBag'e aktar
+
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateService([Bind("UserId,Brand,Model,SeriNo,Warranty,Fault,Procedures,PartsCost,ServiceCost,Description,DeliveryDate")] Service service)
         {
+            //if (ModelState.IsValid)
+            //{
+            //    context.Services.Add(service);
+            //    await context.SaveChangesAsync();
+            //    return RedirectToAction("CreateService");
+            //}
+            //return View(service);
             if (ModelState.IsValid)
             {
-                context.Services.Add(service);
-                await context.SaveChangesAsync();
-                return RedirectToAction("CreateService");
+                try
+                {
+                    context.Services.Add(service);
+                    await context.SaveChangesAsync();
+                    return RedirectToAction("CreateService");
+                }
+                catch (Exception ex)
+                {
+                    // Hata mesajını loglayın
+                    Console.WriteLine(ex.Message);
+                    // Kullanıcıya uygun bir mesaj gösterin
+                    ModelState.AddModelError("", "Bir hata oluştu, lütfen tekrar deneyin.");
+                }
             }
+
+            // Hataları kontrol et ve logla
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            foreach (var error in errors)
+            {
+                Console.WriteLine(error.ErrorMessage);
+            }
+            //var users = await context.Users.ToListAsync();
+            //ViewBag.Users = new SelectList(users, "UserId", "Name");
+
             return View(service);
 
         }

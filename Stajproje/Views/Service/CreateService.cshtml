@@ -4,6 +4,7 @@
 }
 @model Stajproje.Models.Service
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -184,10 +185,24 @@
                                             <label asp-for="Id" class="control-label ">ID</label>
                                             <input asp-for="Id" type="number" class="form-control" id="exampleInputId" placeholder="ID">
                                         </div> *@
-                                        <div class="form-group">
+                                        @* <div class="form-group">
                                             <label asp-for="UserId" class="control-label ">Kullanıcı ID</label>
                                             <input asp-for="UserId" type="number" class="form-control" id="exampleInputUserId" placeholder="Kullanıcı ID">
-                                        </div>
+                                        </div> *@
+                                        @* <select name="UserId" required>
+                                            <option value="">Kullanıcı Seçin</option>
+                                            @foreach (var user in Model.Users)
+                                            {
+                                                <option value="@user.UserId">@user.Name @user.Surname</option>
+                                            }
+                                        </select> *@
+                                         <div class="form-group">
+                                            <label asp-for="UserId" class="control-label">Kullanıcı</label>
+                                            <select asp-for="UserId" asp-items="ViewBag.Users" class="form-control" required>
+                                                <option value="">Kullanıcı Seçin</option>
+                                            </select>
+                                        </div> 
+                                       
                                         <div class="form-group">
                                             <label asp-for="Brand" class="control-label">Marka</label>
                                             <input asp-for="Brand" type="text" class="form-control" id="exampleInputBrand" placeholder="Marka">

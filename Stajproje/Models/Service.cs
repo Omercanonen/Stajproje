@@ -1,13 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Stajproje.Models
 {
     public class Service
     {
         public int Id { get; set; }
+        
+        [Required]
         public int UserId { get; set; }
-        //[ForeignKey("UserId")]
-        //public virtual User User { get; set; }
         public string Brand { get; set; }
         public string Model { get; set; }
         public int SeriNo {  get; set; }
@@ -19,6 +20,9 @@ namespace Stajproje.Models
         public string Description { get; set; }
         public DateTime DeliveryDate { get; set; }
 
-       
+        public User? User { get; set; } 
+
+
+
     }
 }

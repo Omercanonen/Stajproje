@@ -67,14 +67,40 @@ namespace Stajproje.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Surname,Email,PhoneNumber,RegStatus,Title,TaxAdmin,TaxNo")] User user)
         {
+            //if (ModelState.IsValid)
+            //{
+
+            //    context.Users.Add(user);
+            //    await context.SaveChangesAsync();
+            //    return RedirectToAction("Create");
+            //}
+            //return View(user);
             if (ModelState.IsValid)
             {
-
-                context.Users.Add(user);
-                await context.SaveChangesAsync();
-                return RedirectToAction("Create");
+                try
+                {
+                    context.Users.Add(user);
+                    await context.SaveChangesAsync();
+                    return RedirectToAction("Create");
+                }
+                catch (Exception ex)
+                {
+                    // Hata mesajını loglayın
+                    Console.WriteLine(ex.Message);
+                    // Kullanıcıya uygun bir mesaj gösterin
+                    ModelState.AddModelError("", "Bir hata oluştu, lütfen tekrar deneyin.");
+                }
             }
+
+            // Hataları kontrol et ve logla
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            foreach (var error in errors)
+            {
+                Console.WriteLine(error.ErrorMessage);
+            }
+
             return View(user);
+
         }
 
 
