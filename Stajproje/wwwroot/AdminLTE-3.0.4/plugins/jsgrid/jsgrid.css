@@ -3,7 +3,11 @@
  * (c) 2016 Artem Tabalin
  * Licensed under MIT (https://github.com/tabalinas/jsgrid/blob/master/LICENSE)
  */
-
+#jsGrid1 {
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box; /* Padding ve border genişliğe dahil edilir */
+}
 .jsgrid {
     position: relative;
     overflow: hidden;

@@ -24,6 +24,36 @@
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <style>
+        .sortable-column {
+            color: black;
+            text-decoration: none;
+            position: relative;
+            padding-right: 20px; /* Sağda ok için yer bırakma */
+        }
+
+            .sortable-column:hover {
+                cursor: pointer;
+            }
+
+            .sortable-column::after {
+                content: ''; /* Varsayılan olarak boş */
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                border: solid black;
+                border-width: 0 3px 3px 0;
+                display: inline-block;
+                padding: 3px;
+                visibility: hidden; /* Varsayılan olarak görünmez */
+            }
+
+            .sortable-column:hover::after {
+                visibility: visible; /* Fare üzerine gelince görünür */
+                transform: translateY(-50%) rotate(45deg); /* Aşağı ok görünümü */
+            }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -171,20 +201,26 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h3 class="card-title">Cari Listesi</h3>
-                        <a asp-controller="Users" asp-action="Create" class="btn btn-primary">Kullanıcı Ekle</a>
+                        <a asp-controller="Users" asp-action="Create" class="btn btn-primary" style="margin-left: auto;">Kullanıcı Ekle</a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div id="jsGrid1"></div>
                     </div>
-                    @if (Model != null && Model.Any())
+                    @* @if (Model != null && Model.Any())
                     {
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Id</th>
-                                    <th scope="col">İsim</th>
-                                    <th scope="col">Soyisim</th>
+                                    <th scope="col">
+                                        <a asp-action="User" asp-route-sortOrder="@ViewData["UserIdSortParam"]" class="sortable-column">Id</a>
+                                    </th>
+                                    <th scope="col">
+                                        <a asp-action="User" asp-route-sortOrder="@ViewData["NameSortParam"]" class="sortable-column">İsim</a>
+                                    </th>
+                                    <th scope="col">
+                                        <a asp-action="User" asp-route-sortOrder="@ViewData["SurnameSortParam"]" class="sortable-column">Soyisim</a>
+                                    </th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Telefon Numarası</th>
                                     <th scope="col">Durum</th>
@@ -196,13 +232,17 @@
                             <tbody>
                                 @foreach (var user in Model)
                                 {
+                                    var RegStatusClass = user.RegStatus == 1 ? "badge badge-success" : "badge badge-danger";
+                                    var RegStatusText = user.RegStatus == 1 ? "Aktif" : "Pasif";
                                     <tr>
                                         <th scope="row">@user.UserId</th>
                                         <td>@user.Name</td>
                                         <td>@user.Surname</td>
                                         <td>@user.Email</td>
                                         <td>@user.PhoneNumber</td>
-                                        <td>@user.RegStatus</td>
+                                        <td>
+                                            <span class="@RegStatusClass">@RegStatusText</span>
+                                        </td>
                                         <td>@user.Title</td>
                                         <td>@user.TaxAdmin</td>
                                         <td>@user.TaxNo</td>
@@ -216,7 +256,65 @@
                     else
                     {
                         <p>Kullanıcı bulunamadı</p>
+                    } *@
+                    @if (Model != null && Model.Any())
+                    {
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">
+                                        <a asp-action="UserPage" asp-route-sortOrder="@ViewData["UserIdSortParam"]" class="sortable-column">Id</a>
+                                    </th>
+                                    <th scope="col">
+                                        <a asp-action="UserPage" asp-route-sortOrder="@ViewData["NameSortParam"]" class="sortable-column">İsim</a>
+                                    </th>
+                                    <th scope="col">
+                                        <a asp-action="UserPage" asp-route-sortOrder="@ViewData["SurnameSortParam"]" class="sortable-column">Soyisim</a>
+                                    </th>
+                                    <th scope="col">
+                                        <a asp-action="UserPage" asp-route-sortOrder="@ViewData["EmailSortParam"]" class="sortable-column">Email</a>
+                                    </th>
+                                    <th scope="col">
+                                        <a asp-action="UserPage" asp-route-sortOrder="@ViewData["PhoneNumberSortParam"]" class="sortable-column">Telefon Numarası</a>
+                                    </th>
+                                    <th scope="col">Durum</th>
+                                    <th scope="col">Unvan</th>
+                                    <th scope="col">Vergi Dairesi</th>
+                                    <th scope="col">Vergi Numarası</th>
+                                    <th scope="col">Aksiyonlar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in Model)
+                                {
+                                    var RegStatusClass = user.RegStatus == 1 ? "badge badge-success" : "badge badge-danger";
+                                    var RegStatusText = user.RegStatus == 1 ? "Aktif" : "Pasif";
+                                    <tr>
+                                        <th scope="row">@user.UserId</th>
+                                        <td>@user.Name</td>
+                                        <td>@user.Surname</td>
+                                        <td>@user.Email</td>
+                                        <td>@user.PhoneNumber</td>
+                                        <td>
+                                            <span class="@RegStatusClass">@RegStatusText</span>
+                                        </td>
+                                        <td>@user.Title</td>
+                                        <td>@user.TaxAdmin</td>
+                                        <td>@user.TaxNo</td>
+                                        <td>
+                                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@user.UserId">Sil</a>
+                                            <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@user.UserId">Güncelle</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     }
+                    else
+                    {
+                        <p>Kullanıcı bulunamadı</p>
+                    }
+
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->

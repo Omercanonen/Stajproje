@@ -18,11 +18,8 @@ namespace Stajproje.Models
         public int PartsCost { get; set; }
         public int ServiceCost { get; set; }
         public string Description { get; set; }
-        public DateTime DeliveryDate { get; set; }
-
+        public DateTime? DeliveryDate { get; set; }
+        public int DeliveryStatus => DeliveryDate.HasValue ? 1 : 0;
         public User? User { get; set; } 
-
-
-
     }
 }

@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Stajproje.Models;
 
 namespace Stajproje.Controllers
 {
+
+    //[Authorize]
     public class UsersController : Controller
     {
         private readonly UserDbContext context;
@@ -15,10 +18,60 @@ namespace Stajproje.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> UserPage()
+        public async Task<ActionResult> UserPage(string sortOrder)
         {
-            var list = await context.Users.ToListAsync();
-            return View(list);
+            //var list = await context.Users.ToListAsync();
+            //return View(list);
+            ViewData["UserIdSortParam"] = string.IsNullOrEmpty(sortOrder) ? "UserId_desc" : "";
+            ViewData["NameSortParam"] = sortOrder == "Name" ? "Name_desc" : "Name";
+            ViewData["SurnameSortParam"] = sortOrder == "Surname" ? "Surname_desc" : "Surname";
+            ViewData["EmailSortParam"] = sortOrder == "Email" ? "Email_desc" : "Email";
+            ViewData["PhoneNumberSortParam"] = sortOrder == "PhoneNumber" ? "PhoneNumber_desc" : "PhoneNumber";
+
+            // Kullanıcıları veritabanından alın
+            var users = from s in context.Users
+                        select s;
+
+            // Sıralama düzenini belirleyin
+            switch (sortOrder)
+            {
+                case "UserId_desc":
+                    users = users.OrderByDescending(s => s.UserId);
+                    break;
+                case "Name":
+                    users = users.OrderBy(s => s.Name);
+                    break;
+                case "Name_desc":
+                    users = users.OrderByDescending(s => s.Name);
+                    break;
+                case "Surname":
+                    users = users.OrderBy(s => s.Surname);
+                    break;
+                case "Surname_desc":
+                    users = users.OrderByDescending(s => s.Surname);
+                    break;
+                case "Email":
+                    users = users.OrderBy(s => s.Email);
+                    break;
+                case "Email_desc":
+                    users = users.OrderByDescending(s => s.Email);
+                    break;
+                case "PhoneNumber":
+                    users = users.OrderBy(s => s.PhoneNumber);
+                    break;
+                case "PhoneNumber_desc":
+                    users = users.OrderByDescending(s => s.PhoneNumber);
+                    break;
+                default:
+                    users = users.OrderBy(s => s.UserId);
+                    break;
+            }
+
+            // Sonuçları view'a gönderin
+            return View(await users.ToListAsync());
+
+            // Sonuçları view'a gönderin
+            return View(await users.ToListAsync());
         }
         [HttpGet]
         public async Task<IActionResult> Edit(int Id)

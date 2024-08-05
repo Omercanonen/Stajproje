@@ -13,7 +13,14 @@
     <title>AdminLTE 3 | General Form Elements</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- jQuery kütüphanesi -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <!-- Select2 kütüphanesi CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.2/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Select2 kütüphanesi JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.2/dist/js/select2.min.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
@@ -180,33 +187,23 @@
                                 <!-- /.card-header -->
                                 <!-- form start -->
                                 <form method="post" asp-action="CreateService" asp-controller="Service" asp-autocomplete="off" role="form">
-                                    <div class="card-body">
-                                        @* <div class="form-group">
-                                            <label asp-for="Id" class="control-label ">ID</label>
-                                            <input asp-for="Id" type="number" class="form-control" id="exampleInputId" placeholder="ID">
-                                        </div> *@
-                                        @* <div class="form-group">
-                                            <label asp-for="UserId" class="control-label ">Kullanıcı ID</label>
-                                            <input asp-for="UserId" type="number" class="form-control" id="exampleInputUserId" placeholder="Kullanıcı ID">
-                                        </div> *@
-                                        @* <select name="UserId" required>
-                                            <option value="">Kullanıcı Seçin</option>
-                                            @foreach (var user in Model.Users)
-                                            {
-                                                <option value="@user.UserId">@user.Name @user.Surname</option>
-                                            }
-                                        </select> *@
-                                         <div class="form-group">
+                                    <div class="card-body">   
+                                        <div class="form-group">
                                             <label asp-for="UserId" class="control-label">Kullanıcı</label>
-                                            <select asp-for="UserId" asp-items="ViewBag.Users" class="form-control" required>
+                                            <select asp-for="UserId" id="userSelect" class="form-control" required>
                                                 <option value="">Kullanıcı Seçin</option>
+                                                @foreach (var user in ViewBag.Users)
+                                                {
+                                                    <option value="@user.Value">@user.Text (@user.Value)</option>
+                                                }
                                             </select>
-                                        </div> 
+                                        </div>
                                        
                                         <div class="form-group">
                                             <label asp-for="Brand" class="control-label">Marka</label>
                                             <input asp-for="Brand" type="text" class="form-control" id="exampleInputBrand" placeholder="Marka">
                                         </div>
+                                        
                                         <div class="form-group">
                                             <label asp-for="Model" class="control-label">Model</label>
                                             <input asp-for="Model" type="text" class="form-control" id="exampleInputModel" placeholder="Model">
@@ -249,7 +246,6 @@
                                         </div>
                                         <div class="form-group">
                                             <label asp-for="DeliveryDate" class="control-label">Teslim Tarihi</label>
-                                            @* <input asp-for="DeliveryDate" type="datetime" class="form-control" id="exampleInputDeliveryDate" placeholder="Teslim Tarihi"> *@
                                             <input asp-for="DeliveryDate" type="datetime-local" class="form-control" id="exampleInputDeliveryDate" placeholder="Teslim Tarihi">
                                         </div>
                                         
@@ -293,6 +289,14 @@
     <script type="text/javascript">
         $(document).ready(function () {
             bsCustomFileInput.init();
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#userSelect').select2({
+                placeholder: 'Kullanıcı Seçin',
+                allowClear: true
+            });
         });
     </script>
 </body>

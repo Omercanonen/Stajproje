@@ -24,6 +24,36 @@
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <style>
+        .sortable-column {
+            color: black;
+            text-decoration: none;
+            position: relative;
+            padding-right: 20px; /* Sağda ok için yer bırakma */
+        }
+
+            .sortable-column:hover {
+                cursor: pointer;
+            }
+
+            .sortable-column::after {
+                content: ''; /* Varsayılan olarak boş */
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                border: solid black;
+                border-width: 0 3px 3px 0;
+                display: inline-block;
+                padding: 3px;
+                visibility: hidden; /* Varsayılan olarak görünmez */
+            }
+
+            .sortable-column:hover::after {
+                visibility: visible; /* Fare üzerine gelince görünür */
+                transform: translateY(-50%) rotate(45deg); /* Aşağı ok görünümü */
+            }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -171,7 +201,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h3 class="card-title">Servis Kayıt </h3>
-                        <a asp-controller="Service" asp-action="CreateService" class="btn btn-primary">Kullanıcı Ekle</a>
+                        <a asp-controller="Service" asp-action="CreateService" class="btn btn-primary" style="margin-left: auto;">Kayıt Ekle</a>
                     </div> 
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -182,38 +212,43 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">İşlem Id</th>
+                                    <th scope="col">
+                                        <a asp-action="Service" asp-route-sortOrder="@ViewData["IdSortParam"]" class="sortable-column">İşlem Id</a>
+                                    </th>
                                     <th scope="col">Müşteri Id</th>
-                                    <th scope="col">Marka</th>
-                                    <th scope="col">Model</th>
+                                    <th scope="col">
+                                        <a asp-action="Service" asp-route-sortOrder="@ViewData["NameSortParam"]" class="sortable-column">Müşteri Adı</a>
+                                    </th>
+                                    <th scope="col">
+                                        <a asp-action="Service" asp-route-sortOrder="@ViewData["BrandSortParam"]" class="sortable-column">Marka / Model</a>
+                                    </th>
                                     <th scope="col">Seri Numarası</th>
                                     <th scope="col">Garanti Durumu</th>
-                                    <th scope="col">Şikayet</th>
-                                    <th scope="col">Yapılan İşlemler</th>
-                                    <th scope="col">Parça Ücreti</th>
-                                    <th scope="col">Servis Ücreti</th>
-                                    <th scope="col">Açıklama</th>
+                                    <th scope="col">Teslim Durumu</th>
                                     <th scope="col">Teslim Tarihi</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var service in Model)
                                 {
+                                    var warrantyClass = service.Warranty == 1 ? "badge badge-success" : "badge badge-danger";
+                                    var warrantyText = service.Warranty == 1 ? "Garantili" : "Garanti Yok";
                                     <tr>
                                         <th scope="row">@service.Id</th>
+                                        <td>@service.UserId</td>
                                         <td>@service.User.Name</td>
-                                        <td>@service.Brand</td>
-                                        <td>@service.Model</td>
+                                        <td>@service.Brand
+                                            @service.Model</td>
                                         <td>@service.SeriNo</td>
-                                        <td>@service.Warranty</td>
-                                        <td>@service.Fault</td>
-                                        <td>@service.Procedures</td>
-                                        <td>@service.PartsCost</td>
-                                        <td>@service.ServiceCost</td>
-                                        <td>@service.Description</td>
-                                        <td>@service.DeliveryDate</td>
+                                        <td>
+                                            <span class="@warrantyClass">@warrantyText</span>
+                                        </td>
+                                        <td>@(service.DeliveryStatus == 0 ? "Serviste" : "Teslim Edildi")</td>
+                                        <td>@(service.DeliveryDate.HasValue ? service.DeliveryDate.Value.ToString("d") : "Belirtilmemiş")</td>
                                         <td><a class="btn btn-danger" asp-action="DeleteService" asp-route-id="@service.Id">Sil</a></td>
                                         <td><a class="btn btn-secondary" asp-action="EditService" asp-route-id="@service.Id">Güncelle</a></td>
+                                        <td><a class="btn btn-info" asp-action="DetailsService" asp-route-id="@service.Id">Detaylar</a></td>
                                     </tr>
                                 }
                             </tbody>
@@ -223,6 +258,7 @@
                     {
                         <p>Kullanıcı bulunamadı</p>
                     }
+
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
@@ -263,7 +299,7 @@
                 sorting: true,
                 paging: true,
 
-                data: db.StajProje, // Data kısmını değiştir!
+                data: db.StajProje, 
 
                 fields: [
                     { name: "İşlem Id", type: "number", width: 100 },
@@ -282,7 +318,5 @@
             });
         });
     </script>
-
-
 </body>
 </html>

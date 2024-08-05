@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Stajproje.Models;
@@ -7,6 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllersWithViews();
+
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.AddPolicy("AuthenticatedOnly", policy =>
+//        policy.RequireAuthenticatedUser());
+//});
 
 
 builder.Services.AddDbContext<AccountContext>(options =>
@@ -45,6 +51,15 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication(); 
 app.UseAuthorization();
+
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllerRoute(
+//        name: "default",
+//        pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//    endpoints.MapRazorPages(); // Eğer Razor Pages kullanıyorsanız
+//});
 
 app.MapAreaControllerRoute(
     name: "Admin",
