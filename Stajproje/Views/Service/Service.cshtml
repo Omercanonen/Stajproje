@@ -235,10 +235,10 @@
                                     var warrantyClass = service.Warranty == 1 ? "badge badge-success" : "badge badge-danger";
                                     var warrantyText = service.Warranty == 1 ? "Garantili" : "Garanti Yok";
                                     <tr>
-                                        <th scope="row">@service.Id</th>
+                                        <th scope="row">@service.ServiceId</th>
                                         <td>@service.UserId</td>
                                         <td>@service.User.Name</td>
-                                        <td>@service.Brand
+                                        <td>@service.BrandId
                                             @service.Model</td>
                                         <td>@service.SeriNo</td>
                                         <td>
@@ -246,9 +246,9 @@
                                         </td>
                                         <td>@(service.DeliveryStatus == 0 ? "Serviste" : "Teslim Edildi")</td>
                                         <td>@(service.DeliveryDate.HasValue ? service.DeliveryDate.Value.ToString("d") : "Belirtilmemiş")</td>
-                                        <td><a class="btn btn-danger" asp-action="DeleteService" asp-route-id="@service.Id">Sil</a></td>
-                                        <td><a class="btn btn-secondary" asp-action="EditService" asp-route-id="@service.Id">Güncelle</a></td>
-                                        <td><a class="btn btn-info" asp-action="DetailsService" asp-route-id="@service.Id">Detaylar</a></td>
+                                        <td><a class="btn btn-danger" asp-action="DeleteService" asp-route-id="@service.ServiceId">Sil</a></td>
+                                        <td><a class="btn btn-secondary" asp-action="EditService" asp-route-id="@service.ServiceId">Güncelle</a></td>
+                                        <td><a class="btn btn-info" asp-action="DetailsService" asp-route-id="@service.ServiceId">Detaylar</a></td>
                                     </tr>
                                 }
                             </tbody>

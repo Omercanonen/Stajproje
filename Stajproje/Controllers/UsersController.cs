@@ -20,19 +20,16 @@ namespace Stajproje.Controllers
         [HttpGet]
         public async Task<ActionResult> UserPage(string sortOrder)
         {
-            //var list = await context.Users.ToListAsync();
-            //return View(list);
+
             ViewData["UserIdSortParam"] = string.IsNullOrEmpty(sortOrder) ? "UserId_desc" : "";
             ViewData["NameSortParam"] = sortOrder == "Name" ? "Name_desc" : "Name";
             ViewData["SurnameSortParam"] = sortOrder == "Surname" ? "Surname_desc" : "Surname";
             ViewData["EmailSortParam"] = sortOrder == "Email" ? "Email_desc" : "Email";
             ViewData["PhoneNumberSortParam"] = sortOrder == "PhoneNumber" ? "PhoneNumber_desc" : "PhoneNumber";
 
-            // Kullanıcıları veritabanından alın
             var users = from s in context.Users
                         select s;
 
-            // Sıralama düzenini belirleyin
             switch (sortOrder)
             {
                 case "UserId_desc":
@@ -67,12 +64,10 @@ namespace Stajproje.Controllers
                     break;
             }
 
-            // Sonuçları view'a gönderin
             return View(await users.ToListAsync());
-
-            // Sonuçları view'a gönderin
-            return View(await users.ToListAsync());
+ 
         }
+
         [HttpGet]
         public async Task<IActionResult> Edit(int Id)
         {
@@ -120,14 +115,6 @@ namespace Stajproje.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Surname,Email,PhoneNumber,RegStatus,Title,TaxAdmin,TaxNo")] User user)
         {
-            //if (ModelState.IsValid)
-            //{
-
-            //    context.Users.Add(user);
-            //    await context.SaveChangesAsync();
-            //    return RedirectToAction("Create");
-            //}
-            //return View(user);
             if (ModelState.IsValid)
             {
                 try
@@ -138,14 +125,11 @@ namespace Stajproje.Controllers
                 }
                 catch (Exception ex)
                 {
-                    // Hata mesajını loglayın
                     Console.WriteLine(ex.Message);
-                    // Kullanıcıya uygun bir mesaj gösterin
                     ModelState.AddModelError("", "Bir hata oluştu, lütfen tekrar deneyin.");
                 }
             }
 
-            // Hataları kontrol et ve logla
             var errors = ModelState.Values.SelectMany(v => v.Errors);
             foreach (var error in errors)
             {

@@ -8,10 +8,10 @@ using Stajproje.Models;
 
 #nullable disable
 
-namespace Stajproje.Migrations.ServiceDb
+namespace Stajproje.Migrations.BrandDb
 {
-    [DbContext(typeof(ServiceDbContext))]
-    partial class ServiceDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(BrandDbContext))]
+    partial class BrandDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -34,12 +34,9 @@ namespace Stajproje.Migrations.ServiceDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("int");
-
                     b.HasKey("BrandId");
 
-                    b.ToTable("Brand");
+                    b.ToTable("Brands");
                 });
 
             modelBuilder.Entity("Stajproje.Models.Service", b =>
@@ -93,7 +90,7 @@ namespace Stajproje.Migrations.ServiceDb
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Services");
+                    b.ToTable("Service");
                 });
 
             modelBuilder.Entity("Stajproje.Models.User", b =>
@@ -137,7 +134,7 @@ namespace Stajproje.Migrations.ServiceDb
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Stajproje.Models.Service", b =>

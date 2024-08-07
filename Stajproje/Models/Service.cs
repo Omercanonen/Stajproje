@@ -5,11 +5,11 @@ namespace Stajproje.Models
 {
     public class Service
     {
-        public int Id { get; set; }
+        public int ServiceId { get; set; }
         
         [Required]
         public int UserId { get; set; }
-        public string Brand { get; set; }
+        public int BrandId { get; set; }
         public string Model { get; set; }
         public int SeriNo {  get; set; }
         public int Warranty {  get; set; }
@@ -21,5 +21,9 @@ namespace Stajproje.Models
         public DateTime? DeliveryDate { get; set; }
         public int DeliveryStatus => DeliveryDate.HasValue ? 1 : 0;
         public User? User { get; set; } 
+
+        public Brand? Brand { get; set; }
+
+        
     }
 }

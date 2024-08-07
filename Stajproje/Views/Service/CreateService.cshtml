@@ -186,7 +186,7 @@
                                 </div>
                                 <!-- /.card-header -->
                                 <!-- form start -->
-                                <form method="post" asp-action="CreateService" asp-controller="Service" asp-autocomplete="off" role="form">
+                                @* <form method="post" asp-action="CreateService" asp-controller="Service" asp-autocomplete="off" role="form">
                                     <div class="card-body">   
                                         <div class="form-group">
                                             <label asp-for="UserId" class="control-label">Kullanıcı</label>
@@ -200,8 +200,8 @@
                                         </div>
                                        
                                         <div class="form-group">
-                                            <label asp-for="Brand" class="control-label">Marka</label>
-                                            <input asp-for="Brand" type="text" class="form-control" id="exampleInputBrand" placeholder="Marka">
+                                            <label asp-for="BrandId" class="control-label">Marka</label>
+                                            <input asp-for="BrandId" type="text" class="form-control" id="exampleInputBrand" placeholder="Marka">
                                         </div>
                                         
                                         <div class="form-group">
@@ -256,7 +256,118 @@
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Kaydet</button>
                                     </div>
+                                </form> *@
+                                <form method="post" asp-action="CreateService" asp-controller="Service" asp-autocomplete="off" role="form">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label asp-for="UserId" class="control-label">Kullanıcı</label>
+                                            <select asp-for="UserId" id="userSelect" class="form-control" required>
+                                                <option value="">Kullanıcı Seçin</option>
+                                                @foreach (var user in ViewBag.Users)
+                                                {
+                                                    <option value="@user.Value">@user.Text (@user.Value)</option>
+                                                }
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="BrandId" class="control-label">Marka</label>
+                                            <div class="input-group">
+                                                <select asp-for="BrandId" class="form-control" required>
+                                                    <option value="">Marka Seçin</option>
+                                                    @foreach (var brand in ViewBag.Brands)
+                                                    {
+                                                        <option value="@brand.Value">@brand.Text (@brand.Value)</option>
+                                                    }
+                                                </select>
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#brandModal">+</button>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="NewBrand" name="NewBrand" value="" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="Model" class="control-label">Model</label>
+                                            <input asp-for="Model" type="text" class="form-control" id="exampleInputModel" placeholder="Model">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="SeriNo" class="control-label">Seri Numarası</label>
+                                            <input asp-for="SeriNo" type="number" class="form-control" id="exampleInputSeriNo" placeholder="Seri Numarası">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="Warranty">Garanti Durumu</label>
+                                            <div class="custom-control custom-radio">
+                                                <input asp-for="Warranty" type="radio" class="custom-control-input" id="Warranty1" name="Warranty" value="1" />
+                                                <label class="custom-control-label" for="Warranty1">Aktif</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input asp-for="Warranty" type="radio" class="custom-control-input" id="Warranty0" name="Warranty" value="0" />
+                                                <label class="custom-control-label" for="Warranty0">Pasif</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="Fault" class="control-label">Şikayet</label>
+                                            <input asp-for="Fault" type="text" class="form-control" id="exampleInputFault" placeholder="Şikayet">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="Procedures" class="control-label">Yapılan İşlemler</label>
+                                            <input asp-for="Procedures" type="text" class="form-control" id="exampleInputProcedures" placeholder="Yapılan İşlemler">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="PartsCost" class="control-label">Parça Maliyeti</label>
+                                            <input asp-for="PartsCost" type="number" class="form-control" id="exampleInputPartsCost" placeholder="Parça Maliyeti">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="ServiceCost" class="control-label">Servis Maliyeti</label>
+                                            <input asp-for="ServiceCost" type="number" class="form-control" id="exampleInputServiceCost" placeholder="Servis Maliyeti">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="Description" class="control-label">Açıklama</label>
+                                            <input asp-for="Description" type="text" class="form-control" id="exampleInputDescription" placeholder="Açıklama">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="DeliveryDate" class="control-label">Teslim Tarihi</label>
+                                            <input asp-for="DeliveryDate" type="datetime-local" class="form-control" id="exampleInputDeliveryDate" placeholder="Teslim Tarihi">
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                                    </div>
                                 </form>
+                                
+
+                                <div class="modal fade" id="brandModal" tabindex="-1" role="dialog" aria-labelledby="brandModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="brandModalLabel">Yeni Marka Ekle</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="NewBrandInput">Marka Adı</label>
+                                                    <input type="text" class="form-control" id="NewBrandInput" placeholder="Yeni Marka Adı">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                                <button type="button" class="btn btn-primary" onclick="addNewBrand()">Ekle</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -298,6 +409,67 @@
                 allowClear: true
             });
         });
+    </script>
+    <script>
+        // async function addNewBrand() {
+        //     var newBrand = document.getElementById("NewBrandInput").value;
+        //     if (!newBrand) return;
+
+        //     const response = await fetch('/Brand/CreateBrand', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+        //         },
+        //         body: JSON.stringify({ BrandName: newBrand })
+        //     });
+
+        //     if (response.ok) {
+        //         const brand = await response.json();
+        //         var select = document.querySelector("select[name='BrandId']");
+        //         var option = document.createElement("option");
+        //         option.text = brand.BrandName;
+        //         option.value = brand.BrandId;
+        //         select.add(option);
+        //         select.value = brand.BrandId;
+        //         document.getElementById("NewBrand").value = "";
+        //         $('#brandModal').modal('hide');
+        //     } else {
+        //         alert("Marka eklenirken bir hata oluştu.");
+        //     }
+        // }
+        async function addNewBrand() {
+            var newBrand = document.getElementById("NewBrandInput").value;
+            if (!newBrand) return;
+
+            try {
+                const response = await fetch('/Brand/CreateBrand', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    },
+                    body: JSON.stringify({ BrandName: newBrand })
+                });
+
+                if (response.ok) {
+                    const brand = await response.json();
+                    var select = document.querySelector("select[name='BrandId']");
+                    var option = document.createElement("option");
+                    option.text = brand.BrandName;
+                    option.value = brand.BrandId;
+                    select.add(option);
+                    select.value = brand.BrandId;
+                    document.getElementById("NewBrandInput").value = "";
+                    $('#brandModal').modal('hide');
+                } else {
+                    const errorMessage = await response.text();
+                    alert("Marka eklenirken bir hata oluştu: " + errorMessage);
+                }
+            } catch (error) {
+                alert("Bir hata oluştu: " + error.message);
+            }
+        }
     </script>
 </body>
 </html>

@@ -2,14 +2,14 @@
 
 namespace Stajproje.Models
 {
-    public class ServiceDbContext : DbContext
+    public class BrandDbContext:DbContext
     {
-        public ServiceDbContext(DbContextOptions<ServiceDbContext> options) : base(options)
+        public BrandDbContext(DbContextOptions<BrandDbContext> options): base(options)
         {
         }
-        public DbSet<Service> Services { get; set; }
-        public DbSet<User> Users { get; set; }
+
         public DbSet<Brand> Brands { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
